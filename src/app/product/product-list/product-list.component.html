@@ -1,8 +1,46 @@
-<div class="row">
+<div class="container-fluid">
+<div class="row my-3">
   <div class="col-md-3">
     <app-sidebar></app-sidebar>
   </div>
   <div class="col-md-9">
-    <p>product-list works!</p>
+    <div class="products py-3">
+      <div class="row row-cols-5">
+        <div *ngFor="let product of products">
+          <div class="col d-flex flex-column mb-3 " (click)="showProductDetails(product.id)">
+            <div class="mb-4">
+              <!-- <div class="item-img p-2 text-center"> -->
+              <img [src]="product.thumbnail" class="card-img-top shadow-sm" alt="{{ product.title }}" />
+              <!-- </div> -->
+              <div class="p-2 mt-2 card-body">
+                <p class="product__title"> {{product.title.length>60? (product.title | slice:0:60)+'...' :
+                  (product.title)}} {{product.rating}}
+                </p>
+                <div class="product__price d-flex justify-content-between ">
+                  <span><span class="product__price__currency px-1">EGB</span> <span
+                      class="product__price__amount">{{product.price | number:'1.0'}}</span></span>
+                  <span class="badge rounded-pill d-flex align-items-center border border-secondary-subtle"><i
+                      class="fas fa-star px-1"></i>{{product.rating}} <span
+                      class="stock px-1">({{product.stock}})</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col align-self-center text-center " *ngIf="products.length != 0">
+          <!-- <ngb-pagination  class="d-inline-block pagination"
+                           [collectionSize]="collectionSize"
+                           [(page)]="page" [pageSize]="pageSize"
+                           (pageChange)="refreshProductList()">
+            <ng-template ngbPaginationPrevious><i class="fas fa-arrow-left"></i> Previous</ng-template>
+            <ng-template ngbPaginationNext>Next <i class="fas fa-arrow-right"></i></ng-template>
+          </ngb-pagination> -->
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 </div>

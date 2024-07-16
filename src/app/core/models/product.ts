@@ -1,13 +1,23 @@
 export interface Product {
   id: number,
   title: string,
-  price: number,
   description: string,
-  image: string,
-  category: string,
-  quantity: number,
+  Category: string,
+  price: number,
+  discountPercentage: number,
+  rating: number,
+  stock: number,
+  brand: string,
+  thumbnail: string,
+  images: [string],
 }
 
+export interface ProductList {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+}
 export interface Cart {
-  
+
 }

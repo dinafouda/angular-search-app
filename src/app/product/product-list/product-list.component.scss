@@ -1,0 +1,62 @@
+@import "../../../assets/styles/variables";
+
+
+
+.card-body {
+  cursor: pointer;
+  background-color: white;
+}
+
+.product {
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+  }
+
+  &__price {
+    &__currency {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #98A2B3;
+    }
+
+    &__amount {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1D2939;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      font-weight: normal;
+      color: #667085;
+
+      i.fa-star {
+        color: #FAC515;
+        font-size: 0.6rem;
+
+      }
+
+      .stock {
+        font-size: 0.7rem;
+        color: #98A2B3;
+      }
+    }
+
+  }
+
+}
+
+.pagination {
+  .page-item:not(.disabled) .page-link {
+    color: black;
+  }
+
+  .page-item.active .page-link {
+    background-color: $gray;
+    border-color: #dadbdc;
+    color: black;
+  }
+}
