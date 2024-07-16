@@ -1,0 +1,17 @@
+
+@import "../../../assets/styles/variables";
+
+.product{
+  .card-img{
+    width:  100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  &--title{
+    color: #344054;
+  }
+  &--desc{
+    color: #98A2B3;
+  }
+}

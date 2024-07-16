@@ -7,7 +7,7 @@
     <div class="products py-3">
       <div class="row row-cols-5">
         <div *ngFor="let product of products">
-          <div class="col d-flex flex-column mb-3 " (click)="showProductDetails(product.id)">
+          <div class="col d-flex flex-column mb-3 product__card" (click)="showProductDetails(product.id)">
             <div class="mb-4">
               <!-- <div class="item-img p-2 text-center"> -->
               <img [src]="product.thumbnail" class="card-img-top shadow-sm" alt="{{ product.title }}" />

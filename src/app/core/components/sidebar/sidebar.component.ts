@@ -59,7 +59,22 @@ export class SidebarComponent implements OnInit {
   }
 
   filterByBrand(brandName: string, checkBox: HTMLInputElement, index: number): void {
-   
+    this.categoryService.brands[index].checked = checkBox.checked;
+    if (this.categoryService.brands[index].checked){
+      this.filterbrands.push(brandName);
+    }else{
+      this.filterbrands =  this.filterbrands.filter(e => e !== brandName);
+   }
+    // if (this.filterbrands.length > 0){
+    //   this.filteredProduct  = _.filter(this.maintainProductSrv.AllProducts, (product)  => {
+    //     return this.filterbrands.indexOf(product.brand) !== -1 ;
+    //   });
+    //   this.maintainProductSrv.ProductListUpdated.emit(this.filteredProduct);
+    //   this.maintainProductSrv.pageList.emit(['home', brandName]);
+    // }else{
+    //   this.maintainProductSrv.ProductListUpdated.emit(this.maintainProductSrv.AllProducts);
+    //   this.maintainProductSrv.pageList.emit(['home']);
+    // }
   }
 
   filterByPrice(): void {
