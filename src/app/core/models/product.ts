@@ -1,9 +1,13 @@
 export interface Product {
   id: number,
-  name: string,
+  title: string,
   price: number,
   description: string,
   image: string,
   category: string,
   quantity: number,
+}
+
+export interface Cart {
+  
 }

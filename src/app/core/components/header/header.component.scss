@@ -1,0 +1,10 @@
+@import "../../../../assets/styles/variables";
+
+header{
+    background-color: $primary;
+    .navbar-nav {
+      .nav-item a, .nav-item i{
+        color: white;
+      }
+    }
+ }

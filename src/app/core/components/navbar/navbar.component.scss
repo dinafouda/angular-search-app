@@ -1,0 +1,17 @@
+@import "../../../../assets/styles/variables";
+
+.navbar {
+  background-color: $primary-light;
+
+  .navbar-nav {
+    .nav-item {
+      a {
+        color: $grey-dark;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+}
