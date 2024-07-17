@@ -1,10 +1,9 @@
 <header class="navbar position-sticky d-flex flex-column">
-  <div class="container">
+  <div class="container-fluid">
     <a class="navbar-brand"><img src="assets/images/logo.svg"></a>
-    <form class="d-flex col-12 col-md-6" role="search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-      <input class="form-control me-2" type="search" formControlName="search" (ngModelChange)="onSubmit()"
-        placeholder="Search for Product" aria-label="Search" name="searchKey" (focusout)="onSubmit()">
-    </form>
+    <div class="d-flex col-12 col-md-6">
+        <input class="form-control me-2" type="search" [(ngModel)]="search" (ngModelChange)="onSearchChange()" placeholder="Search for Product">
+    </div>
     <div class="d-flex">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row">
         <li class="nav-item  d-flex align-items-center px-2 ">

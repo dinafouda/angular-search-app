@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { Brand } from '../../models/brand';
-import { ProductList , Product } from '../../models/product';
 import { CategoryService } from '../../../product/services/category.service'
 import { ProductService } from './../../../product/services/product.service';
 import { Options, LabelType } from '@angular-slider/ngx-slider';
@@ -41,6 +40,11 @@ export class SidebarComponent implements OnInit {
 
   };
 
+  selectedCategory: string = '';
+  selectedBrands: string[] = [];
+  priceRange = { min: 0, max: 1000 };
+  rating = 0;
+
   constructor(private productService: ProductService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
@@ -51,36 +55,21 @@ export class SidebarComponent implements OnInit {
   }
 
   filterByCategory(category: string): void {
-    this.categoryService.getCategoryProducts(category).subscribe((productList) =>  {
-      //@ts-ignore
-      this.productService.ProductListUpdated.emit(productList.products);
-      this.productService.pageList.emit(['product-list', category]);
-    });
+    this.selectedCategory = category;
+    this.productService.setCategory(category);
   }
 
-  filterByBrand(brandName: string, checkBox: HTMLInputElement, index: number): void {
-    this.categoryService.brands[index].checked = checkBox.checked;
-    if (this.categoryService.brands[index].checked){
-      this.filterbrands.push(brandName);
-    }else{
-      this.filterbrands =  this.filterbrands.filter(e => e !== brandName);
-   }
-    // if (this.filterbrands.length > 0){
-    //   this.filteredProduct  = _.filter(this.maintainProductSrv.AllProducts, (product)  => {
-    //     return this.filterbrands.indexOf(product.brand) !== -1 ;
-    //   });
-    //   this.maintainProductSrv.ProductListUpdated.emit(this.filteredProduct);
-    //   this.maintainProductSrv.pageList.emit(['home', brandName]);
-    // }else{
-    //   this.maintainProductSrv.ProductListUpdated.emit(this.maintainProductSrv.AllProducts);
-    //   this.maintainProductSrv.pageList.emit(['home']);
-    // }
+  filterByBrand(brands: string[]| []): void {
+    this.selectedBrands = brands;
+    this.productService.setBrands(brands);
   }
 
-  filterByPrice(): void {
-
+  filterByPrice(min: number, max: number): void {
+    this.priceRange = { min, max };
+    this.productService.setPriceRange(min, max);
    }
-  filterByRate(): void {
-    console.log('Rate')
+  filterByRate(rating: number): void {
+    this.rating = rating;
+    this.productService.setRating(rating);
   }
 }

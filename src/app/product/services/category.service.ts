@@ -30,9 +30,7 @@ export class CategoryService {
   }
 
 
-  getCategoryProducts(category: string): Observable <ProductList[]>{
-    return this.httpClient.get<ProductList[]>(`${this.apiUrl}/products/category/${category}`);
-  }
+
 
 
 }

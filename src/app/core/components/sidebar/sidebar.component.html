@@ -13,8 +13,8 @@
   <ul class="list-group list-group-flush ">
     <li *ngFor="let brand of Brands;let i = index;"
       class="list-group-item d-flex   justify-content-between align-items-center">
-      <span><input #checkBox type="checkbox" aria-label="Checkbox for following text input"
-          (change)="filterByBrand(brand.name,checkBox,i)"><span class="px-2 font-weight-normal"> {{brand.name}}</span></span>
+      <span><input type="checkbox" [value]="brand.name" (change)="filterByBrand($any($event.target).value)"><span
+          class="px-2 font-weight-normal"> {{brand.name}}</span></span>
       <span class="badge rounded-pill border border-secondary-subtle bg-gray text-dark">{{brand.quantity}}</span>
     </li>
   </ul>
@@ -22,13 +22,16 @@
     <h6>Price Range(EGB)</h6>
   </div>
   <form class="d-flex align-items-center justify-content-center">
-    <span>from</span> <input id="from" [(ngModel)]="fromPrice" name="from" class="mx-2 form-control w-50" type="text"
-      placeholder="100" (focusout)="filterByPrice()">
-    <span>to</span> <input id="to" [(ngModel)]="toPrice" name="to" class="mx-2 form-control w-50" type="text"
-      placeholder="10,000" (focusout)="filterByPrice()">
+    <span>from</span>
+    <input type="number" [(ngModel)]="priceRange.min" name="from" class="mx-2 form-control w-50"
+      placeholder="100" (change)="filterByPrice(priceRange.min, priceRange.max)">
+    <span>to</span>
+    <input type="number" [(ngModel)]="priceRange.max" name="to" class="mx-2 form-control w-50"
+      placeholder="10,000" (change)="filterByPrice(priceRange.min, priceRange.max)">
   </form>
   <div class="filter-title my-4">
     <h6>Product Rating</h6>
   </div>
-  <ngx-slider class="mt-5" [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (userChange)="filterByRate()"></ngx-slider>
+  <ngx-slider class="mt-5" [(value)]="minValue" [(highValue)]="maxValue" [options]="options" [(ngModel)]="rating"
+    (userChange)="filterByRate(rating)"></ngx-slider>
 </div>

@@ -1,5 +1,6 @@
+import { ProductList } from './../../models/product';
+import { ProductService } from './../../../product/services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../../models/product';
 import { CartService } from '../../../product/services/cart.service';
 
@@ -9,15 +10,11 @@ import { CartService } from '../../../product/services/cart.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  searchForm: FormGroup = new FormGroup({});
   cartProductList: Product[] = [];
+  search: string = '';
 
-  constructor(private _formBuilder: FormBuilder, private cartService:CartService) { }
+  constructor( private cartService:CartService, private productService:ProductService) { }
   ngOnInit(): void {
-    this.searchForm = this._formBuilder.group({
-      search: [],
-    })
-
     this.cartService.getCartItems().subscribe(data => {
       //@ts-ignore
       this.cartProductList = data.products;
@@ -25,14 +22,10 @@ export class HeaderComponent implements OnInit {
 
   }
 
-
-  onSubmit(): void {
-    if (this.searchForm.valid) { }
+  onSearchChange() {
+    this.productService.setSearch(this.search);
   }
 
-  removeItemFromCart(productId: number): void {
-
-
-  }
+  removeItemFromCart(productId: number): void {}
 
 }

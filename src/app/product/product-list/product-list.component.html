@@ -38,6 +38,29 @@
             <ng-template ngbPaginationPrevious><i class="fas fa-arrow-left"></i> Previous</ng-template>
             <ng-template ngbPaginationNext>Next <i class="fas fa-arrow-right"></i></ng-template>
           </ngb-pagination> -->
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination  justify-content-center">
+              <li class="page-item">
+                <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </button>
+              </li>
+              <li class="page-item disabled"><a class="page-link" href="#"><span>Page {{ currentPage }} of {{ totalPages }}</span></a></li>
+              <li class="page-item">
+                <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- <div class="limit-controls">
+            <label for="productsPerPage">Products per page:</label>
+            <select id="productsPerPage" (change)="onLimitChange($any($event.target).value)">
+              <option *ngFor="let limit of [10, 20, 30, 40, 50]" [value]="limit">{{ limit }}</option>
+            </select>
+          </div> -->
         </div>
       </div>
     </div>
