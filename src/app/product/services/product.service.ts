@@ -37,34 +37,42 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllProducts(): Observable<ProductList[]> {
-    return combineLatest([this.search$, this.category$, this.brand$, this.priceRange$, this.rating$, this.limit$, this.page$]).pipe(
-      switchMap(([search, category, brands, priceRange, rating, limit, page]) => {
-        let limitSkip = `?limit=${limit}&skip=${(page - 1) * limit}`;
-        let params = '';
-        if (search) {
-          params = `/search?q=${search}`;
-          console.log(params)
-        }
-        else if (category) {
-          params = `/category/${category}`;
-        }
-        else if (brands.length > 0) {
-          params = `&brands=${brands.join(',')}`;
-        }
-        else if (priceRange.min >= 0 && priceRange.max < Infinity) {
-          params += `&price_min=${priceRange.min}&price_max=${priceRange.max}`;
-        }
-        else if (rating > 0) {
-          params = `&rating=${rating}`;
-        } else if(limit || page) {
-          params = limitSkip;
-        }
-        const url = `${this.apiUrl}${params}`;
-        return this.httpClient.get<ProductList[]>(url).pipe(
-          catchError(() => of([])) // Handle error and return empty array on failure
-        );
-      })
+  // getAllProducts(): Observable<ProductList[]> {
+  //   return combineLatest([this.search$, this.category$, this.brand$, this.priceRange$, this.rating$, this.limit$, this.page$]).pipe(
+  //     switchMap(([search, category, brands, priceRange, rating, limit, page]) => {
+  //       let limitSkip = `?limit=${limit}&skip=${(page - 1) * limit}`;
+  //       let params = '';
+  //       if (search) {
+  //         params = `/search?q=${search}`;
+  //         console.log(params)
+  //       }
+  //       else if (category) {
+  //         params = `/category/${category}`;
+  //       }
+  //       else if (brands.length > 0) {
+  //         params = `&brands=${brands.join(',')}`;
+  //       }
+  //       else if (priceRange.min >= 0 && priceRange.max < Infinity) {
+  //         params += `&price_min=${priceRange.min}&price_max=${priceRange.max}`;
+  //       }
+  //       else if (rating > 0) {
+  //         params = `&rating=${rating}`;
+  //       } else if(limit || page) {
+  //         params = limitSkip;
+  //       }
+  //       const url = `${this.apiUrl}${params}`;
+  //       return this.httpClient.get<ProductList[]>(url).pipe(
+  //         catchError(() => of([])) // Handle error and return empty array on failure
+  //       );
+  //     })
+  //   );
+  // }
+
+  getAllProducts(params: any): Observable<ProductList> {
+    const urlParams = new URLSearchParams(params).toString();
+    const url = `${this.apiUrl}?${urlParams}`;
+    return this.httpClient.get<ProductList>(url).pipe(
+      catchError(() => of({ products: [], total: 0, skip: 0, limit: 0 }))
     );
   }
 
@@ -74,33 +82,5 @@ export class ProductService {
 
   getCategoryProducts(category: string): Observable<ProductList[]> {
     return this.httpClient.get<ProductList[]>(`${this.apiUrl}/category/${category}`);
-  }
-
-  setPage(page: number) {
-    this.pageSubject.next(page);
-  }
-
-  setLimit(limit: number) {
-    this.limitSubject.next(limit);
-  }
-
-  setSearch(search: string) {
-    this.searchSubject.next(search);
-  }
-
-  setCategory(category: string) {
-    this.categorySubject.next(category);
-  }
-
-  setBrands(brands: string[]) {
-    this.brandSubject.next(brands);
-  }
-
-  setPriceRange(min: number, max: number) {
-    this.priceRangeSubject.next({ min, max });
-  }
-
-  setRating(rating: number) {
-    this.ratingSubject.next(rating);
   }
 }

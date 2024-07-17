@@ -3,8 +3,8 @@
   <div class="col-md-3">
     <app-sidebar></app-sidebar>
   </div>
-  <div class="col-md-9">
-    <div class="products py-3">
+  <div class="col-md-9" *ngIf="(products$ | async) as products;">
+    <div class="products py-3 " >
       <div class="row row-cols-5">
         <div *ngFor="let product of products">
           <div class="col d-flex flex-column mb-3 product__card" (click)="showProductDetails(product.id)">
@@ -31,24 +31,19 @@
 
       <div class="row mt-5">
         <div class="col align-self-center text-center " *ngIf="products.length != 0">
-          <!-- <ngb-pagination  class="d-inline-block pagination"
-                           [collectionSize]="collectionSize"
-                           [(page)]="page" [pageSize]="pageSize"
-                           (pageChange)="refreshProductList()">
-            <ng-template ngbPaginationPrevious><i class="fas fa-arrow-left"></i> Previous</ng-template>
-            <ng-template ngbPaginationNext>Next <i class="fas fa-arrow-right"></i></ng-template>
-          </ngb-pagination> -->
 
           <nav aria-label="Page navigation example">
-            <ul class="pagination  justify-content-center">
+            <ul class="pagination justify-content-center">
               <li class="page-item">
-                <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="page-link" href="#" aria-label="Previous">
+                <button class="page-link" (click)="onPageChange((currentPage$ | async) - 1)" [disabled]="(currentPage$ | async) === 1" aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </button>
               </li>
-              <li class="page-item disabled"><a class="page-link" href="#"><span>Page {{ currentPage }} of {{ totalPages }}</span></a></li>
+              <li class="page-item disabled">
+                <a class="page-link">Page {{ currentPage$ | async }} of {{ (total$ | async) / (limit$ | async) | ceil }}</a>
+              </li>
               <li class="page-item">
-                <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-link" href="#" aria-label="Next">
+                <button class="page-link" (click)="onPageChange((currentPage$ | async) + 1)" [disabled]="(currentPage$ | async) === (total$ | async) / (limit$ | async) | ceil" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </button>
               </li>
