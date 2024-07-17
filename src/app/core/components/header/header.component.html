@@ -10,20 +10,19 @@
         <li class="nav-item  d-flex align-items-center px-2 ">
           <span><i class="fas fa-bookmark"></i></span><a class="nav-link px-2" href="#">watchlist</a>
         </li>
-        <li class="nav-item d-flex align-items-center px-2 dropdown">
+        <li class="nav-item d-flex align-items-center px-2 dropdown position-relative">
           <a class="nav-link px-2" id="dropdownMenuButton"
           data-bs-toggle="dropdown" aria-expanded="false"><span><i class="fas fa-shopping-cart"></i></span> cart</a>
-          <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
+          <ul class="dropdown-menu dropdown-menu-end p-2 position-absolute">
             <ul class="list-group list-group-flush" *ngIf="cartProductList.length > 0 ">
                 <li  *ngFor="let cartItem of cartProductList;let i = index"
-                  class="list-group-item d-flex p-1 align-items-center font-small text-capitalize mb-1 bg-transparent ">
-                  <!-- <span class="text-center w-25 "><img  class="card-img" src="{{cartItem.thumbnail? cartItem.thumbnail:cartItem.images[0]}}" /> </span> -->
-                  <div class="d-flex flex-column px-2 w-50">
+                  class="list-group-item d-flex p-1 align-items-center font-small text-capitalize mb-1 bg-transparent">
+                  <span class="text-center w-25 "><img  class="card-img" src="{{cartItem.thumbnail? cartItem.thumbnail:cartItem.images[0]}}" /> </span>
+                  <div class="d-flex flex-column px-2 w-75">
                     <span class="pb-1"><b>{{cartItem.title}}</b></span>
                     <span class="btn-link">checkout</span>
                   </div>
-                  <span class="btn-danger" (click)="removeItemFromCart(cartItem.id)"><i
-                      class="fas  fa-trash"></i></span>
+                  <span class="btn btn-danger btn-sm " (click)="removeItemFromCart(cartItem.id)"><i class="fa-regular fa-trash-can"></i></span>
                 </li>
             </ul>
             <li *ngIf="cartProductList.length == 0"><p class="lead text-center text-grey font-small px-1 mb-0"> No Product Added </p></li>

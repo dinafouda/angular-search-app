@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+
 import { ProductService } from '../services/product.service';
 import { Product } from '../../core/models/product';
 import {ActivatedRoute, Params} from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 
 @Component({
@@ -27,7 +30,7 @@ export class ProductDetailsComponent implements OnInit {
   productImageSrc = '';
   warningFlg = false;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute,) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, private cartService:CartService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: Params) => {
@@ -47,5 +50,13 @@ export class ProductDetailsComponent implements OnInit {
   }
 
 
-  addToCart(): void{}
+  addToCart(product: Product): void{
+    this.cartService.addToCart(product).subscribe({
+      next: ()=> {
+        this.toastr.success('Added to Cart!', 'cart!', {
+          timeOut: 3000,
+        });
+      }
+    });
+  }
 }
